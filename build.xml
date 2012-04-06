@@ -1,0 +1,55 @@
+﻿<?xml version="1.0"?>
+<project name="" default="launch" basedir="./">
+
+	<property file="build.properties"/>
+
+	<target name="mxmlc">
+        <exec executable="${flex.home}/${mxmlc}" failonerror="true">
+            <arg line="-compiler.include-libraries=${lib}" />
+            <arg line="-compiler.incremental=${incremental}" />
+            <arg line="-static-link-runtime-shared-libraries=true" />
+            <arg line="-debug=${debug}" />
+            <arg line="-default-background-color=0x${background.color}" />
+			<arg line="-default-frame-rate=${framerate}" />
+			<arg line="-default-size ${width} ${height}" />
+            <arg line="-source-path='${src}'" />
+            <arg line="'${basedir}/${src}/${src.file}'"/>
+            <arg line="-o=${bin}/${output.file}"/>
+			<arg line="-use-network=true" />
+	    </exec>
+	</target>
+
+    <target name="build" depends="mxmlc">
+		<basename file="${output.file}"
+			property="basefilename" suffix=".swf"/>
+	</target>
+
+    <target name="launch" depends="build">
+		<condition property="runtarget" value="runswf">
+			<equals arg1="${launch}" arg2="standalone" />
+		</condition>
+		<antcall target="${runtarget}" />
+	</target>
+
+
+	<target name="runswf" description="runs the swf file in the flashplayer">
+		<exec executable="${flashplayer}" spawn="true">
+			<arg line="${basedir}/${bin}/${output.file}" />
+		</exec>
+	</target>
+
+	<target name="compc">
+		<exec executable="${flex.home}/${compc}" failonerror="true">
+			<arg line="-include-sources ${compc.srcpath}" />
+			<arg line="-output ${bin}/${compc.output}" />
+			<arg line="-compiler.library-path ${compc.lib}" />
+        </exec>
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}" />
+		<delete dir="${dist}" />
+		<delete dir="${docs}" />
+	</target>
+
+</project>
