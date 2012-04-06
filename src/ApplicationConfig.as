@@ -1,5 +1,8 @@
 package
 {
+	import commands.StartupCommand;
+	import events.ApplicationEvent;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.IEventDispatcher;
 	
@@ -9,6 +12,8 @@ package
 	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
 	import robotlegs.bender.extensions.localEventMap.api.IEventMap;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
+
+	import view.MainMediator;
 	
 	public class ApplicationConfig
 	{
@@ -22,20 +27,21 @@ package
     	[Inject]
     	public var eventDispatcher:IEventDispatcher;
 
+    	[Inject]
+    	public var main:DisplayObjectContainer;
+
     	[PostConstruct]
 		public function init():void
 		{
 			// Map Mediators
-			//var mediatorMap:IMediatorMap = context.injector.getInstance( IMediatorMap );
-			//	mediatorMap.mapView(TestView).toMediator(TestMediator); 
+			mediatorMap.mapView(Main).toMediator(MainMediator);
+			mediatorMap.handleView(main,Main);
 
 			// Map Commands
-			//var commandMap:IEventCommandMap = context.injector.getInstance( IEventCommandMap );
-			//	commandMap.map( ApplicationEvent.STARTUP, ApplicationEvent).toCommand( StartupCommand );
-			
+			commandMap.map( ApplicationEvent.STARTUP, ApplicationEvent).toCommand( StartupCommand );
+		
 			// Dispatch Start
-			//var eventDispatcher:IEventDispatcher = context.injector.getInstance( IEventDispatcher );
-			//	eventDispatcher.dispatchEvent( new ApplicationEvent( ApplicationEvent.STARTUP ) );
+			eventDispatcher.dispatchEvent( new ApplicationEvent( ApplicationEvent.STARTUP ) );
 		}
 	}
 }
