@@ -7,7 +7,7 @@ package
 	
 	import org.casalib.util.StageReference;
 
-	import robotlegs.bender.bundles.classic.ClassicRobotlegsBundle;
+	import robotlegs.bender.bundles.mvcs.MVCSBundle;
 	import robotlegs.bender.framework.context.api.IContext;
 	import robotlegs.bender.framework.context.impl.Context;
 	/**
@@ -29,10 +29,7 @@ package
 		private function init():void
 		{
 			//start here
-			var context:IContext = new Context( 
-				ClassicRobotlegsBundle, 
-				ApplicationConfig,
-				this); 
+			var context:IContext = new Context().extend(MVCSBundle).configure(ApplicationConfig,this); 
 		}
 		
 		private function checkStageReadiness( e:Event ):void
