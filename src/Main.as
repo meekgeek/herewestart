@@ -1,12 +1,14 @@
-package {
+package 
+{
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
+	import org.casalib.util.StageReference;
 	/**
 	 * ...
-	 * @author elimak
+	 * @author joel caballero
 	 */
 	public class Main extends Sprite 
 	{	
@@ -14,6 +16,8 @@ package {
 		{
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+
+			StageReference.setStage(stage);
 
 			stage.addEventListener( Event.ENTER_FRAME, checkStageReadiness );
 		}
