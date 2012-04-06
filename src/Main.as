@@ -1,23 +1,36 @@
 package {
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
 	/**
 	 * ...
 	 * @author elimak
 	 */
-	public class Main extends Sprite {
-		
-		public function Main():void {
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+	public class Main extends Sprite 
+	{	
+		public function Main():void 
+		{
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+
+			stage.addEventListener( Event.ENTER_FRAME, checkStageReadiness );
+		}
+
+		private function init():void
+		{
+			//start here
 		}
 		
-		private function init(e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			// entry point
+		private function checkStageReadiness( e:Event ):void
+		{
+			if( stage.stageWidth > 0 && stage.stageHeight > 0 )
+			{
+				stage.removeEventListener( Event.ENTER_FRAME, checkStageReadiness );
+				
+				this.init();
+			}
 		}
-		
 	}
-	
 }
