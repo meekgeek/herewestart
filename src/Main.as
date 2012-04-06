@@ -6,6 +6,10 @@ package
 	import flash.events.Event;
 	
 	import org.casalib.util.StageReference;
+
+	import robotlegs.bender.bundles.classic.ClassicRobotlegsBundle;
+	import robotlegs.bender.framework.context.api.IContext;
+	import robotlegs.bender.framework.context.impl.Context;
 	/**
 	 * ...
 	 * @author joel caballero
@@ -25,6 +29,10 @@ package
 		private function init():void
 		{
 			//start here
+			var context:IContext = new Context( 
+				ClassicRobotlegsBundle, 
+				ApplicationConfig,
+				this); 
 		}
 		
 		private function checkStageReadiness( e:Event ):void
